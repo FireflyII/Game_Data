@@ -71,6 +71,12 @@ else:
 #
 ################################################
 
+#At the beginning of the file, both X and Y are going to the same for a while,
+#So in order to start tracking turns, the first thing to do is find the first value
+#that changes.
+#
+#The findFirst function locates the first position in a list that is different
+#from the ones before.
 def findFirst(A):
     for i in range(len(A)):
         if i!=len(A)-1:
@@ -79,6 +85,7 @@ def findFirst(A):
         else:
             return len(A)
 
+#Given a list, and a starting position, find the next time the value changes
 def nextX(Xs,start):
     if start < len(Xs):
         for i in range(start,len(Xs)):
@@ -88,6 +95,12 @@ def nextX(Xs,start):
     else:
         return False
 
+#This function will take a list of x coordinates and a list of y coordinates,
+#along with two empty lists for the output. It looks to see which list changes
+#first (either x, or y), then alternates back and forth between the two, logging
+#each time there is a change. In this way, the resulting lists nXs and nYs should
+#be comprised of only those points where the player turned, marking the edges of
+#a path.
 def findTurns(Xs, Ys, nXs, nYs):
     s = 0
     t = True
@@ -126,6 +139,8 @@ def findTurns(Xs, Ys, nXs, nYs):
             else:
                 t = False
 
+#Given the new Xs and Ys (from above), the findDistances function calculates the length of travel
+#between turns, and returns a list thereof.
 def findDistances(nXs, nYs):
     # This will result in a list of all the lengths of travel. 
     nu = []
@@ -138,6 +153,11 @@ def findDistances(nXs, nYs):
         nu.remove(0)
     return nu
 
+#Taking a filename as an argument, the analyze function proceeds to read the file,
+#extract the x and y coordinates, calculate the corner points and path lengths, then
+#output a plot of x and y, a plot of the trimmed/corner points, a histogram of the path lengths,
+#and the data reformated into a CSV file for ease of import into other programs later, all dependent
+#on which flags were specified when the program is called from the command line.
 def analyze(fl2):
     if isdir:
         fl=sys.argv[1]+"/"+fl2
